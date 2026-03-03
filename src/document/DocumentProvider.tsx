@@ -26,6 +26,9 @@ import {
   useState,
 } from "react";
 import { DOC_ROOT_PATH, DocMetadata, USERINFO_ROOT_PATH } from "./model-and-db";
+import { generateId } from "./util";
+
+const FORK_KEYS_TO_COPY = ["metadata", "content", "miniAppState"];
 
 type DocumentContext = {
   docLoading: boolean;
@@ -33,6 +36,7 @@ type DocumentContext = {
   docRef: DatabaseReference;
   metadata: DocMetadata | undefined;
   updateMetadata: (updates: Partial<DocMetadata>) => void;
+  fork: () => void;
   deleteDocument: () => void;
 };
 
@@ -99,6 +103,30 @@ export function DocumentProvider({
     window.location.pathname = "/";
   }, [docId]);
 
+  const fork = useCallback(async () => {
+    let ss: Record<string, any> = await new Promise((resolve) => {
+      onValue(docRef, (ss) => resolve(ss.val()), { onlyOnce: true });
+    });
+    let newDoc: Record<string, any> = {};
+    for (let key of FORK_KEYS_TO_COPY) {
+      if (ss[key]) {
+        newDoc[key] = ss[key];
+      }
+    }
+    newDoc.metadata = newDoc.metadata || {};
+    newDoc.metadata.title = (newDoc.metadata.title || "Untitled") + " (Fork)";
+    // Create new doc in RTDB + redirect
+    let newId = generateId();
+    console.log(newId);
+    await set(ref(db, `${DOC_ROOT_PATH}/${newId}`), newDoc);
+    userRef.current &&
+      (await set(
+        ref(db, `${USERINFO_ROOT_PATH}/${userRef.current.uid}/docs/${newId}`),
+        newDoc.metadata,
+      ));
+    window.open(newId);
+  }, [docId]);
+
   // Observe doc metadata and content from RTDB
   useEffect(() => {
     let unsub = onValue(metadataRef, (ss) => {
@@ -115,6 +143,7 @@ export function DocumentProvider({
         docRef,
         metadata,
         updateMetadata,
+        fork,
         deleteDocument,
       }}
     >

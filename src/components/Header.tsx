@@ -30,6 +30,7 @@ import {
 import { onValue, ref } from "firebase/database";
 import {
   ChevronDownIcon,
+  CopyIcon,
   LinkIcon,
   PlusIcon,
   Share2Icon,
@@ -46,7 +47,7 @@ import { useToast } from "./Toast";
 export function Header({ children }: PropsWithChildren) {
   const { user } = useAuthContext();
   const [appUserInfo, setAppUserInfo] = useState<AppUserInfo>({ docs: {} });
-  const { docId, metadata, updateMetadata, deleteDocument } =
+  const { docId, metadata, updateMetadata, fork, deleteDocument } =
     useDocumentContext();
   const { peers, connected } = usePresenceContext();
   const { toast } = useToast();
@@ -169,6 +170,16 @@ export function Header({ children }: PropsWithChildren) {
             </Flex>
           </Popover.Content>
         </Popover.Root>
+        <Tooltip content="Fork">
+          <IconButton
+            variant="ghost"
+            color="gray"
+            radius="full"
+            onClick={() => fork()}
+          >
+            <CopyIcon size={20} />
+          </IconButton>
+        </Tooltip>
         <Separator orientation="vertical" />
         <SettingsButton />
         <SendFeedbackButton feedbackKey={APP_ROOT_PATH} />
