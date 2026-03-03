@@ -1,0 +1,68 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.logoButton {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+
+  .logoMenuIcon {
+    visibility: hidden;
+  }
+
+  &:hover,
+  &:focus-visible {
+    .logo {
+      visibility: hidden;
+    }
+    .logoMenuIcon {
+      visibility: visible;
+    }
+  }
+}
+
+.docTitle {
+  padding: 0 4px;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 4px 0 4px;
+  border-radius: 4px;
+
+  &:global(.is-target):hover {
+    outline: 1px solid var(--gray-10);
+  }
+
+  &:global(.is-editing) {
+    outline: 2px solid var(--accent-10);
+  }
+}
+
+.peerFacePile {
+  margin-right: 8px;
+}
+
+.slot,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}

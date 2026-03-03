@@ -1,0 +1,44 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@use '@/shared.lib' as lib;
+
+.editor {
+  background-color: var(--gray-3);
+  width: 100vw;
+  height: 100svh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 16px;
+}
+
+.appContainer,
+.empty {
+  display: flex;
+  flex: 1 1 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-3);
+}
+
+.appViewer {
+  flex: 1 1 0;
+}
+
+.empty {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-1);
+  padding: 24px;
+}
+
+.appPrompt {
+  width: 100%;
+}

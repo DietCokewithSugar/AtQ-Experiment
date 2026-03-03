@@ -1,0 +1,37 @@
+{
+  "name": "ss",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "deploy": "npm run build && firebase hosting:channel:deploy -e 30d ss",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^1.24.0",
+    "@radix-ui/themes": "^3.2.1",
+    "@xyflow/react": "^12.8.6",
+    "classnames": "^2.5.1",
+    "esbuild-wasm": "^0.25.11",
+    "firebase": "^12.4.0",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^0.545.0",
+    "nanoid": "^5.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@paper-design/shaders-react": "^0.0.71",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "sass": "^1.93.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-node-polyfills": "^0.24.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
