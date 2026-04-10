@@ -31,13 +31,11 @@ const MOCK_INFO = [
 
 const AuthContext = createContext<{
   user: UserInfo | null;
-  hasAccess: string | null;
   authLoaded: boolean;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
 }>({
   user: null,
-  hasAccess: null,
   authLoaded: true,
   signIn: async () => {},
   signOut: async () => {},
@@ -52,7 +50,6 @@ export function useAuthContext() {
  */
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<UserInfo | null>(null);
-  const [hasAccess, setHasAccess] = useState<string | null>(null);
   const [authLoaded, setAuthLoaded] = useState(false);
 
   const signIn = useCallback(async () => {
@@ -65,9 +62,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     let unsub = onAuthStateChanged(auth, async (user) => {
-      let idTokenResult = await user?.getIdTokenResult();
       setAuthLoaded(true);
-      setHasAccess(String(idTokenResult?.claims.hasAccess || "") || null);
       let mockId = new URLSearchParams(window.location.search).get("mock");
       if (!user) {
         setUser(null);
@@ -92,7 +87,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   return (
     <AuthContext.Provider
-      value={{ user, hasAccess, authLoaded, signIn, signOut: _signOut }}
+      value={{ user, authLoaded, signIn, signOut: _signOut }}
     >
       {children}
     </AuthContext.Provider>
