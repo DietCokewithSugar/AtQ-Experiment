@@ -12,7 +12,6 @@ import { Card, Heading, HeadingProps, Text, TextProps } from "@radix-ui/themes";
 import { useMemo, useState } from "react";
 import { Loading } from "../components/Loading";
 import { InitialPrefsScreen } from "./InitialPrefsScreen";
-import { InviteCodeScreen } from "./InviteCodeScreen";
 import { LoginScreen } from "./LoginScreen";
 import styles from "./Onboarding.module.scss";
 import { areRequiredPrefsSet } from "./RequiredPrefs";
@@ -20,7 +19,7 @@ import { areTermsAccepted, TermsScreen } from "./TermsScreen";
 import { GodRays, MeshGradient } from "@paper-design/shaders-react";
 
 export function OnboardGate({ children }: React.PropsWithChildren) {
-  const { user, hasAccess, authLoaded } = useAuthContext();
+  const { user, authLoaded } = useAuthContext();
   const { prefs } = usePrefsContext();
   const [continueKey, setContinueKey] = useState(0);
   const termsAccepted = useMemo(() => areTermsAccepted(prefs), [continueKey]);
@@ -39,7 +38,6 @@ export function OnboardGate({ children }: React.PropsWithChildren) {
 
   if (!authLoaded) return <Loading />;
   if (!user) return <LoginScreen />;
-  if (!hasAccess) return <InviteCodeScreen />;
   if (!termsAccepted) return <TermsScreen onContinue={() => setContinueKey((k) => k + 1)} />;
   if (!initialConfigDone)
     return (

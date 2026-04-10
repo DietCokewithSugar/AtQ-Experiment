@@ -54,32 +54,6 @@
   background-color: var(--gray-a3);
 }
 
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-4px);
-  }
-  25%, 75% {
-    transform: translateX(4px);
-  }
-}
-
-.inviteCodeField.isError {
-  animation: shake 0.3s ease-in-out;
-}
-
-.inviteCodeField input {
-  font-family: var(--font-family-code);
-  letter-spacing: 0.2em;
-
-  &::placeholder {
-    font-family: var(--font-family-body);
-    letter-spacing: normal;
-  }
-}
-
 .avatar {
   position: fixed;
   right: 24px;
